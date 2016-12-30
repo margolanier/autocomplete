@@ -1,0 +1,65 @@
+@import '../node_modules/foundation-sites/scss/foundation';
+
+@include foundation-global-styles;
+@include foundation-grid;
+
+$grey: #e5e5e5;
+
+body {
+	@include grid-row();
+}
+
+section {
+	@include grid-column(12);
+	margin: 0 auto;
+	float: none;
+	max-width: 800px;
+}
+
+h1 {
+	font-size: 3rem;
+	font-family: serif;
+	text-align: center;
+	margin: 1rem 0 0;
+	
+	span {
+		font-weight: bold;
+		color: green;
+	}
+}
+
+h2 {
+	font-size: 1rem;
+	text-align: center;
+}
+
+input#searchbox {
+	margin-top: 2rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	font-size: 1.5rem;
+}
+
+#options {
+	display: none;
+	margin-top: -1rem;
+	border: 1px solid $grey;
+	
+	&.active {
+		display: block;
+	}
+	
+	ul {
+		margin: 0;
+		list-style: none;
+		padding: .5rem 0;
+		
+		li {
+			padding: 0 .5rem;
+			
+			&:hover, &:focus {
+				background-color: $grey;
+			}
+		}
+	}
+}

@@ -2,14 +2,13 @@ let possible = ['red', 'orange', 'green', 'black', 'blue'];
 let filtered = [];
 
 function init() {
-	//console.log(possible);
 	
 	let searchbox = document.querySelector('#searchbox');
 	
 	// On user input
 	searchbox.addEventListener('input', function(e) {
 		
-		query = e.target.value;
+		let query = e.target.value;
 		
 		// Check possible options against search query for matches
 		for (let i=0; i<possible.length; i++) {
@@ -33,12 +32,18 @@ function init() {
 		
 		// Display updated list
 		let options = document.querySelector('#options');
+		
 		options.innerHTML = Mustache.render(
 			'<ul>{{#.}}<li>{{.}}</li>{{/.}}</ul>',
 			filtered
 		)
 		
-		//console.log(filtered);
+		// Set active styles
+		if (query.length > 0 && filtered.length > 0) {
+			options.classList.add('active');
+		} else {
+			options.classList.remove('active');
+		}
 		
 	});
 	
