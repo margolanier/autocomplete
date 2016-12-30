@@ -1,5 +1,4 @@
 let possible = ['red', 'orange', 'green', 'black', 'blue'];
-let filtered = [];
 
 function init() {
 	console.log(possible);
@@ -10,10 +9,10 @@ function init() {
 	searchbox.addEventListener('input', function(e) {
 		
 		query = e.target.value;
+		let filtered = [];
 		
-		// Check possible options for matches
+		// Check possible options against search query for matches
 		for (let i=0; i<possible.length; i++) {
-			
 			if (possible[i].includes(query)) {
 				filtered.push(possible[i]);
 			}
@@ -26,6 +25,7 @@ function init() {
 			filtered
 		)
 		
+		console.log(filtered);
 		
 	});
 	
