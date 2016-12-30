@@ -1,7 +1,8 @@
 let possible = ['red', 'orange', 'green', 'black', 'blue'];
+let filtered = [];
 
 function init() {
-	console.log(possible);
+	//console.log(possible);
 	
 	let searchbox = document.querySelector('#searchbox');
 	
@@ -9,12 +10,24 @@ function init() {
 	searchbox.addEventListener('input', function(e) {
 		
 		query = e.target.value;
-		let filtered = [];
 		
 		// Check possible options against search query for matches
 		for (let i=0; i<possible.length; i++) {
+			let match = filtered.indexOf(possible[i]);
+			
 			if (possible[i].includes(query)) {
-				filtered.push(possible[i]);
+				
+				// Only push new options to array
+				if (match === -1) {
+					filtered.push(possible[i]);
+				}
+				
+			} else {
+				
+				// Remove options that no longer match
+				if (match !== -1) {
+					filtered.splice(match, 1);
+				}
 			}
 		}
 		
@@ -25,7 +38,7 @@ function init() {
 			filtered
 		)
 		
-		console.log(filtered);
+		//console.log(filtered);
 		
 	});
 	
