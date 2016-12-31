@@ -1303,9 +1303,11 @@ section {
   float: left;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
-  margin: 0 auto;
   float: none;
-  max-width: 800px; }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%); }
   @media screen and (min-width: 40em) {
     section {
       padding-left: 0.9375rem;
@@ -1320,31 +1322,37 @@ h1 {
   margin: 1rem 0 0; }
   h1 span {
     font-weight: bold;
-    color: green; }
+    color: #E01763; }
 
 h2 {
   font-size: 1rem;
   text-align: center; }
 
-input#searchbox {
-  margin-top: 2rem;
-  height: 2.5rem;
-  line-height: 2.5rem;
-  font-size: 1.5rem; }
-
-#options {
-  display: none;
-  margin-top: -1rem;
-  border: 1px solid #e5e5e5; }
-  #options.active {
-    display: block; }
-  #options ul {
-    margin: 0;
-    list-style: none;
-    padding: .5rem 0; }
-    #options ul li {
-      padding: 0 .5rem; }
-      #options ul li:hover, #options ul li:focus {
-        background-color: #e5e5e5; }
+fieldset {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative; }
+  fieldset input#searchbox {
+    margin-top: 2rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: 1.5rem;
+    border-color: #E01763; }
+  fieldset #options {
+    display: none;
+    position: absolute;
+    margin-top: -1rem;
+    border: 1px solid #e5e5e5;
+    width: 100%; }
+    fieldset #options.active {
+      display: block; }
+    fieldset #options ul {
+      margin: 0;
+      list-style: none;
+      padding: .5rem 0; }
+      fieldset #options ul li {
+        padding: 0 .5rem; }
+        fieldset #options ul li:hover, fieldset #options ul li:focus {
+          background-color: #e5e5e5; }
 
 /*# sourceMappingURL=style.css.map */

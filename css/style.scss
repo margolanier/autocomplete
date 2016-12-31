@@ -4,6 +4,7 @@
 @include foundation-grid;
 
 $grey: #e5e5e5;
+$pink: #E01763;
 
 body {
 	@include grid-row();
@@ -11,9 +12,11 @@ body {
 
 section {
 	@include grid-column(12);
-	margin: 0 auto;
 	float: none;
-	max-width: 800px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
 }
 
 h1 {
@@ -24,7 +27,7 @@ h1 {
 	
 	span {
 		font-weight: bold;
-		color: green;
+		color: $pink;
 	}
 }
 
@@ -33,32 +36,41 @@ h2 {
 	text-align: center;
 }
 
-input#searchbox {
-	margin-top: 2rem;
-	height: 2.5rem;
-	line-height: 2.5rem;
-	font-size: 1.5rem;
-}
-
-#options {
-	display: none;
-	margin-top: -1rem;
-	border: 1px solid $grey;
+fieldset {
+	max-width: 800px;
+	margin: 0 auto;
+	position: relative;
 	
-	&.active {
-		display: block;
+	input#searchbox {
+		margin-top: 2rem;
+		height: 2.5rem;
+		line-height: 2.5rem;
+		font-size: 1.5rem;
+		border-color: $pink;
 	}
 	
-	ul {
-		margin: 0;
-		list-style: none;
-		padding: .5rem 0;
+	#options {
+		display: none;
+		position: absolute;
+		margin-top: -1rem;
+		border: 1px solid $grey;
+		width: 100%;
 		
-		li {
-			padding: 0 .5rem;
+		&.active {
+			display: block;
+		}
+		
+		ul {
+			margin: 0;
+			list-style: none;
+			padding: .5rem 0;
 			
-			&:hover, &:focus {
-				background-color: $grey;
+			li {
+				padding: 0 .5rem;
+				
+				&:hover, &:focus {
+					background-color: $grey;
+				}
 			}
 		}
 	}
