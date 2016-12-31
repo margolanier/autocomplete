@@ -1,5 +1,4 @@
-let possible = ['red', 'orange', 'green', 'black', 'blue'];
-let filtered = [];
+let possible = ['red', 'orange', 'green', 'black', 'blue', 'multi word value'];
 
 function init() {
 	
@@ -9,34 +8,26 @@ function init() {
 	searchbox.addEventListener('input', function(e) {
 		
 		let query = e.target.value;
+		let filtered = [];
 		
 		// Check possible options against search query for matches
 		for (let i=0; i<possible.length; i++) {
-			let match = filtered.indexOf(possible[i]);
+			let match = possible[i].indexOf(query);
 			
 			if (possible[i].includes(query)) {
 				
-				// Only push new options to array
-				if (match === -1) {
-					filtered.push(possible[i]);
-				}
+				let seg1 = possible[i].slice(0, match);
+				let seg2 = possible[i].slice(match, match + query.length);
+				let seg3 = possible[i].slice(match + query.length);
 				
-			} else {
-				
-				// Remove options that no longer match
-				if (match !== -1) {
-					filtered.splice(match, 1);
-				}
+				let segmented = seg1 + '<b>' + seg2 + '</b>' + seg3;
+				filtered.push(segmented);
 			}
 		}
 		
 		// Display updated list
 		let options = document.querySelector('#options');
-		
-		options.innerHTML = Mustache.render(
-			'<ul>{{#.}}<li>{{.}}</li>{{/.}}</ul>',
-			filtered
-		)
+		options.innerHTML = Mustache.render('<ul>{{#.}}<li>{{{.}}}</li>{{/.}}</ul>', filtered);
 		
 		// Set active styles
 		if (query.length > 0 && filtered.length > 0) {
