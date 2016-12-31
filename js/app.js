@@ -63,19 +63,16 @@ function autoComplete() {
 	for (let i=0; i<possible.length; i++) {
 		
 		// Adjust for mode
-		let p;
+		let p = '';
 		if (mode === 'simple') {
 			p = possible[i];
 		} else {
 			p = possible[i].name;
 		}
 		
-		console.log(p);
-		//console.log(query);
-		let match = p.indexOf(query);
+		let match = p.toLowerCase().indexOf(query.toLowerCase());
 		
-		if (p.includes(query)) {
-			
+		if ( p.toLowerCase().includes(query.toLowerCase()) ) {
 			let seg1 = p.slice(0, match);
 			let seg2 = p.slice(match, match + query.length);
 			let seg3 = p.slice(match + query.length);
