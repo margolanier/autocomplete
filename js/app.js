@@ -53,11 +53,13 @@ function init() {
 			autoComplete();
 		});
 	}
+	
 }
 
 
 function autoComplete() {
 	let filtered = [];
+	let selected = [];
 	
 	// Check possible options against search query for matches
 	for (let i=0; i<possible.length; i++) {
@@ -79,6 +81,7 @@ function autoComplete() {
 			
 			let segmented = seg1 + '<b>' + seg2 + '</b>' + seg3;
 			filtered.push(segmented);
+			selected.push(possible[i]);
 		}
 	}
 	
@@ -91,6 +94,23 @@ function autoComplete() {
 		options.classList.add('active');
 	} else {
 		options.classList.remove('active');
+	}
+	
+	// Replace input value when user clicks an autocomplete option
+	let userSelect = document.querySelectorAll('li');
+	
+	for (let i=0; i<userSelect.length; i++) {
+		userSelect[i].addEventListener('click', function() {
+			
+			// Get value of original option without <b> tags
+			let index = filtered.indexOf(userSelect[i].innerHTML);
+			if (mode === 'simple') {
+				searchbox.value = selected[index];
+			} else {
+				searchbox.value = selected[index].name;
+			}
+			
+		});
 	}
 }
 
