@@ -15,7 +15,11 @@
 			<h2>An autocomplete search function</h2>
 			
 			<fieldset>
-				<input id='searchbox' type='text' placeholder='Egypt'>
+				<label for="search-mode">Search Mode</label>
+				<p><input type="radio" name="search-mode" value="simple" checked> Simple</p>
+				<p><input type="radio" name="search-mode" value="complex"> Complex</p>
+			</form>
+				<input id='searchbox' type='text' placeholder='Morocco'>
 				<div id='options'></div>
 			</fieldset>
 			
