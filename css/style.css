@@ -1291,7 +1291,8 @@ button {
 body {
   max-width: 75rem;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  background-color: white; }
   body::before, body::after {
     content: ' ';
     display: table; }
@@ -1332,16 +1333,6 @@ fieldset {
   max-width: 800px;
   margin: 0 auto;
   position: relative; }
-  fieldset [type=checkbox], fieldset [type=radio] {
-    margin: 0 0 .5rem; }
-  fieldset label {
-    font-weight: bold;
-    font-family: serif;
-    text-transform: uppercase; }
-  fieldset .nato-members {
-    display: flex; }
-  fieldset .continents {
-    display: flex; }
   fieldset input#searchbox {
     margin-top: 2rem;
     height: 2.5rem;
@@ -1353,7 +1344,8 @@ fieldset {
     position: absolute;
     margin-top: -1rem;
     border: 1px solid #e5e5e5;
-    width: 100%; }
+    width: 100%;
+    background-color: white; }
     fieldset #options.active {
       display: block; }
     fieldset #options ul {
@@ -1364,5 +1356,23 @@ fieldset {
         padding: 0 .5rem; }
         fieldset #options ul li:hover, fieldset #options ul li:focus {
           background-color: #e5e5e5; }
+  fieldset p.radio {
+    line-height: 1rem;
+    margin: .5rem 0; }
+  fieldset label {
+    font-weight: bold;
+    font-family: serif;
+    text-transform: uppercase; }
+  fieldset #filters {
+    border: 1px solid #e5e5e5;
+    padding: .5rem;
+    width: 100%;
+    position: absolute; }
+    fieldset #filters.hidden {
+      display: none; }
+  fieldset .nato-members, fieldset .continents {
+    display: flex; }
+  fieldset [type=checkbox], fieldset [type=radio] {
+    margin: 0 0 .5rem; }
 
 /*# sourceMappingURL=style.css.map */

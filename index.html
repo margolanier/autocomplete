@@ -15,26 +15,30 @@
 			<h2>Start searching for a country and let the autocomplete refine your search results.</h2>
 			
 			<fieldset>
-				<label for="search-mode">Search Mode</label>
-				<p class="radio"><input type="radio" name="search-mode" value="simple" checked> Name of Country</p>
-
-				<p class="radio"><input type="radio" name="search-mode" value="complex"> Filter by Category</p>
-				<p class="nato-members"><label for="nato">NATO Member</label>
-				<input type="checkbox" name="nato" value="true"> Member
-				<input type="checkbox" name="nato" value="false"> Not a member</p>
-
-				<p class="continents"><label for="continent">Continent</label>
-				<input type="checkbox" name="continent" value="north america"> North America
-				<input type="checkbox" name="continent" value="south america"> South America
-				<input type="checkbox" name="continent" value="europe"> Europe
-				<input type="checkbox" name="continent" value="asia"> Asia
-				<input type="checkbox" name="continent" value="africa"> Africa
-				<input type="checkbox" name="continent" value="australia"> Australia
-				<input type="checkbox" name="continent" value="antarctica"> Antarctica
-				</p>
-			
 				<input id='searchbox' type='text' placeholder='Morocco'>
 				<div id='options'></div>
+				
+				
+				<label for="search-mode">Search By</label>
+				<p class="radio"><input type="radio" name="search-mode" value="simple" checked> Name of Country</p>
+
+				<p class="radio"><input type="radio" name="search-mode" value="complex"> More Filters</p>
+				<div id="filters" class="hidden">
+					<p class="nato-members"><label for="nato">NATO Member</label>
+					<input type="checkbox" name="nato" value="true"> Member
+					<input type="checkbox" name="nato" value="false"> Not a member</p>
+
+					<p class="continents"><label for="continent">Continent</label>
+					<input type="checkbox" name="continent" value="north america"> North America
+					<input type="checkbox" name="continent" value="south america"> South America
+					<input type="checkbox" name="continent" value="europe"> Europe
+					<input type="checkbox" name="continent" value="asia"> Asia
+					<input type="checkbox" name="continent" value="africa"> Africa
+					<input type="checkbox" name="continent" value="australia"> Australia
+					<input type="checkbox" name="continent" value="antarctica"> Antarctica
+					</p>
+				</div>
+			
 			</fieldset>
 			
 		</section>

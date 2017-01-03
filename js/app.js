@@ -1,6 +1,8 @@
 let possible = [];
 let mode = 'simple';
 let query = '';
+
+// for filters
 let continents = [];
 let nato = null;
 let Continue = true;
@@ -20,6 +22,12 @@ function init() {
 	for (let i=0; i<getMode.length; i++) {
 		getMode[i].addEventListener('click', function() {
 			mode = getMode[i].value;
+			let filters = document.querySelector('#filters');
+			if (mode === 'complex') {
+				filters.classList.remove('hidden');
+			} else {
+				filters.classList.add('hidden');
+			}
 			getDataSet();
 		});
 	}

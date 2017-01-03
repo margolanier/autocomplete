@@ -8,6 +8,7 @@ $pink: #E01763;
 
 body {
 	@include grid-row();
+	background-color: white;
 }
 
 section {
@@ -41,24 +42,6 @@ fieldset {
 	margin: 0 auto;
 	position: relative;
 	
-	[type=checkbox], [type=radio] {
-    	margin: 0 0 .5rem;
-	}
-	
-	label {
-		font-weight: bold;
-		font-family: serif;
-		text-transform: uppercase;
-	}
-	
-	.nato-members {
-		display: flex;
-	}
-	
-	.continents {
-		display: flex;
-	}
-	
 	input#searchbox {
 		margin-top: 2rem;
 		height: 2.5rem;
@@ -73,6 +56,7 @@ fieldset {
 		margin-top: -1rem;
 		border: 1px solid $grey;
 		width: 100%;
+		background-color: white;
 		
 		&.active {
 			display: block;
@@ -92,4 +76,36 @@ fieldset {
 			}
 		}
 	}
+	
+	p.radio {
+		line-height: 1rem;
+		margin: .5rem 0;
+	}
+	
+	label {
+		font-weight: bold;
+		font-family: serif;
+		text-transform: uppercase;
+	}
+	
+	#filters {
+		border: 1px solid $grey;
+		padding: .5rem;
+		width: 100%;
+		position: absolute;
+		
+		&.hidden {
+			display: none;
+		}
+	}
+	
+	.nato-members, .continents {
+		display: flex;
+	}
+	
+	[type=checkbox], [type=radio] {
+    	margin: 0 0 .5rem;
+	}
+	
+	
 }
