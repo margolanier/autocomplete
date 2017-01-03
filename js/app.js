@@ -2,6 +2,7 @@ let possible = [];
 let mode = 'simple';
 let query = '';
 
+
 function init() {
 	
 	// Update autocomplete list on user input
@@ -18,10 +19,10 @@ function init() {
 		getMode[i].addEventListener('click', function() {
 			mode = getMode[i].value;
 			getDataSet();
-			//autoComplete();
 		});
 	}
 	
+	getDataSet();
 	autoComplete();
 	
 }
@@ -114,6 +115,7 @@ function autoComplete() {
 			} else {
 				searchbox.value = selected[index].name;
 			}
+			options.classList.remove('active');
 			
 		});
 	}

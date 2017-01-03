@@ -1332,6 +1332,16 @@ fieldset {
   max-width: 800px;
   margin: 0 auto;
   position: relative; }
+  fieldset [type=checkbox], fieldset [type=radio] {
+    margin: 0 0 .5rem; }
+  fieldset label {
+    font-weight: bold;
+    font-family: serif;
+    text-transform: uppercase; }
+  fieldset .nato-members {
+    display: flex; }
+  fieldset .continents {
+    display: flex; }
   fieldset input#searchbox {
     margin-top: 2rem;
     height: 2.5rem;
