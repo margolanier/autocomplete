@@ -17,43 +17,48 @@ function init() {
 	for (let i=0; i<getMode.length; i++) {
 		getMode[i].addEventListener('click', function() {
 			mode = getMode[i].value;
-			
-			// simple mode uses string array from api
-			if (mode === 'simple') {
-				let request = new XMLHttpRequest();
-				request.open('GET', 'http://api.queencityiron.com/autocomplete');
-				
-				request.addEventListener('load', function() {
-					possible = JSON.parse(request.responseText);
-				});
-				request.send();
-				
-			} else {
-				// complex mode uses custom object array
-				possible = [
-					{	name: 'United States',
-						nato_member: true,
-						continent: 'North America'
-					},
-					{	name: 'Canada',
-						nato_member: true,
-						continent: 'North America'
-					},
-					{	name: 'Greece',
-						nato_member: true,
-						continent: 'Europe'
-					},
-					{	name: 'China',
-						nato_member: false,
-						continent: 'Asia'
-					}
-				];
-			}
-			
-			autoComplete();
+			getDataSet();
+			//autoComplete();
 		});
 	}
 	
+	autoComplete();
+	
+}
+
+
+function getDataSet() {
+	// simple mode uses string array from api
+	if (mode === 'simple') {
+		let request = new XMLHttpRequest();
+		request.open('GET', 'http://api.queencityiron.com/autocomplete');
+		
+		request.addEventListener('load', function() {
+			possible = JSON.parse(request.responseText);
+		});
+		request.send();
+		
+	} else {
+		// complex mode uses custom object array
+		possible = [
+			{	name: 'United States',
+				nato_member: true,
+				continent: 'North America'
+			},
+			{	name: 'Canada',
+				nato_member: true,
+				continent: 'North America'
+			},
+			{	name: 'Greece',
+				nato_member: true,
+				continent: 'Europe'
+			},
+			{	name: 'China',
+				nato_member: false,
+				continent: 'Asia'
+			}
+		];
+	}
 }
 
 
