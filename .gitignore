@@ -1,15 +1,3 @@
-.DS_Store
-.svn
-.cvs
-*.bak
-*.swp
-Thumbs.db
-.htaccess
-
 node_modules/*
 css/.sass-cache/*
 style.css.map
-
-index.js
-package.json
-api/*

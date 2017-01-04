@@ -5,8 +5,6 @@ let query = '';
 // for filters
 let continents = [];
 let nato = null;
-let Continue = true;
-
 
 function init() {
 	
@@ -40,18 +38,19 @@ function init() {
 
 
 function getDataSet() {
-	let request = new XMLHttpRequest();
-	
 	// default mode uses api data
-	// other mode uses local data (array of objects)
-	let url = (mode === 'default') ? 'http://api.queencityiron.com/autocomplete' : 'data.json';
-	
-	request.open('GET', url);
-	
-	request.addEventListener('load', function() {
-		wordbank = JSON.parse(request.responseText);
-	});
-	request.send();
+	if (mode === 'default') {
+		let request = new XMLHttpRequest();
+		request.open('GET','http://api.queencityiron.com/autocomplete');
+		
+		request.addEventListener('load', function() {
+			wordbank = JSON.parse(request.responseText);
+		});
+		request.send();
+	} else {
+		// other mode uses local data (array of objects)
+		getAltData();
+	}
 }
 
 
@@ -63,17 +62,16 @@ function autoComplete() {
 	for (let i=0; i<wordbank.length; i++) {
 		let option = (mode === 'default') ? wordbank[i] : wordbank[i].name;
 		
-		if (mode === 'other') {
-			// Run additional filters on word before determining if it qualifies
-			filter(wordbank[i]);
-		}
+		let test = true;
 		
-		// filter should return boolean; true to continue
-		// if (filter(wordbank[i])) {
+		// Run additional filters on word before determining a match
+		filter(wordbank[i]);
 		
-		// Add matches to list of suggestions
-		// Highlight the letters that match the query
-		//if (Continue) {
+		// filter returns boolean, must be true to continue
+		if (filter(wordbank[i])) {
+			
+			// Add matches to list of suggestions
+			// Highlight the letters that match the query
 			let match = option.toLowerCase().indexOf(query.toLowerCase());
 			
 			if ( option.toLowerCase().includes(query.toLowerCase()) ) {
@@ -84,10 +82,8 @@ function autoComplete() {
 				let seg3 = option.slice(match + query.length);
 				let segmented = seg1 + '<b>' + seg2 + '</b>' + seg3;
 				suggestions_b.push(segmented);
-				
 			}
-			Continue = false;
-		//}
+		}
 		
 	}
 	
@@ -108,14 +104,12 @@ function autoComplete() {
 	for (let i=0; i<userSelect.length; i++) {
 		userSelect[i].addEventListener('click', function() {
 			
-			// Get value of original option without <b> tags
+			// Get suggestion without <b> tags
 			// Words in suggestions[] and suggestions_b[] share same index
 			let index = suggestions_b.indexOf(userSelect[i].innerHTML);
-			if (mode === 'default') {
-				searchbox.value = suggestions[index];
-			} else {
-				searchbox.value = suggestions[index].name;
-			}
+			
+			searchbox.value = (mode === 'default') ? suggestions[index] : suggestions[index].name;
+			
 			dropdown.classList.remove('active');
 			
 		});
@@ -124,14 +118,6 @@ function autoComplete() {
 
 
 function getFilters() {
-	let getNato = document.querySelectorAll('input[name=nato]');
-	for (let i=0; i<getNato.length; i++) {
-		getNato[i].addEventListener('click', function() {
-			if (getNato[i].checked) {
-				nato.push(getNato[i].value);
-			}
-		});
-	}
 	
 	let getContinents = document.querySelectorAll('input[name=continent]');
 	for (let i=0; i<getContinents.length; i++) {
@@ -144,27 +130,66 @@ function getFilters() {
 			}
 		});
 	}
+	
+	let getNato = document.querySelectorAll('input[name=nato]');
+	for (let i=0; i<getNato.length; i++) {
+		getNato[i].addEventListener('click', function() {
+			if (getNato[i].checked) {
+				nato = (getNato[i].value === 'true');
+			} else {
+				nato = null;
+			}
+		});
+	}
 }
 
 
-function filter(term) {
-	// If the search object (word) matches the use filter,
-	// keep it in the suggestions (continue)
-	// else, reject it
+function filter(word) {
+	// returns 'true' if word passes all tests (user filters)
+	
+	if (mode === 'default') {
+		return true;
+	}
+	
 	if (continents.length > 0) {
-		if (continents.indexOf(term.continent.toLowerCase()) === -1) {
-			//Continue = false;
-			//break;
+		if (continents.indexOf(word.continent.toLowerCase()) === -1) {
+			return false;
 		}
 	}
 	
-	/*if nato !== null {
-		if (term.nato_member !== nato) {
-		   Continue = false;
+	if (nato !== null) {
+		if (word.nato_member !== nato) {
+		   return false;
 		}
-	}*/
+	}
 	
-	return true; // continue
+	return true;
+}
+
+
+function getAltData() {
+	wordbank = [
+		{
+			name: "United States",
+			continent: "North America",
+			nato_member: true
+		},
+		{
+			name: "Canada",
+			continent: "North America",
+			nato_member: true
+		},
+		{
+			name: "Greece",
+			continent: "Europe",
+			nato_member: true
+		},
+		{
+			name: "China",
+			continent: "Asia",
+			nato_member: false
+		}
+	]
 }
 
 window.addEventListener('load', init);

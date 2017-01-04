@@ -1,0 +1,22 @@
+[
+	{
+		"name": "United States",
+		"continent": "North America",
+		"nato_member": true
+	},
+	{
+		"name": "Canada",
+		"continent": "North America",
+		"nato_member": true
+	},
+	{
+		"name": "Greece",
+		"continent": "Europe",
+		"nato_member": true
+	},
+	{
+		"name": "China",
+		"continent": "Asia",
+		"nato_member": false
+	}
+]
