@@ -1,10 +1,15 @@
-let wordbank = [];
+// user search
 let mode = 'default';
 let query = '';
 
-// for filters
+// autocomplete options
+let wordbank = [];
+
+// filters
 let continents = [];
 let nato = null;
+
+
 
 function init() {
 	
@@ -12,7 +17,7 @@ function init() {
 	let searchbox = document.querySelector('#searchbox');
 	searchbox.addEventListener('input', function(e) {
 		query = e.target.value;
-		autoComplete();
+		autocomplete();
 	});
 	
 	// Get search mode to determine which dataset to use
@@ -32,8 +37,7 @@ function init() {
 	}
 	
 	getDataSet();
-	autoComplete();
-	
+	autocomplete();
 }
 
 
@@ -54,7 +58,7 @@ function getDataSet() {
 }
 
 
-function autoComplete() {
+function autocomplete() {
 	let suggestions = []; // list of options that contain query
 	let suggestions_b = []; // same as above list, but with <b> tags around query
 	
@@ -84,7 +88,6 @@ function autoComplete() {
 				suggestions_b.push(segmented);
 			}
 		}
-		
 	}
 	
 	// Display updated list
@@ -128,6 +131,7 @@ function getFilters() {
 				let index = continents.indexOf(getContinents[i].value);
 				continents.splice(index, 1);
 			}
+			autocomplete();
 		});
 	}
 	
@@ -139,6 +143,7 @@ function getFilters() {
 			} else {
 				nato = null;
 			}
+			autocomplete();
 		});
 	}
 }
