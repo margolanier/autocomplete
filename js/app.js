@@ -1,5 +1,5 @@
-let possible = [];
-let mode = 'simple';
+let wordbank = [];
+let mode = 'default';
 let query = '';
 
 // for filters
@@ -23,12 +23,113 @@ function init() {
 		getMode[i].addEventListener('click', function() {
 			mode = getMode[i].value;
 			let filters = document.querySelector('#filters');
-			if (mode === 'complex') {
+			if (mode === 'other') {
 				filters.classList.remove('hidden');
+				getFilters();
 			} else {
 				filters.classList.add('hidden');
 			}
 			getDataSet();
+		});
+	}
+	
+	getDataSet();
+	autoComplete();
+	
+}
+
+
+function getDataSet() {
+	let request = new XMLHttpRequest();
+	
+	// default mode uses api data
+	// other mode uses local data (array of objects)
+	let url = (mode === 'default') ? 'http://api.queencityiron.com/autocomplete' : 'data.json';
+	
+	request.open('GET', url);
+	
+	request.addEventListener('load', function() {
+		wordbank = JSON.parse(request.responseText);
+	});
+	request.send();
+}
+
+
+function autoComplete() {
+	let suggestions = []; // list of options that contain query
+	let suggestions_b = []; // same as above list, but with <b> tags around query
+	
+	// Run list of autocomplete options against search query for matches
+	for (let i=0; i<wordbank.length; i++) {
+		let option = (mode === 'default') ? wordbank[i] : wordbank[i].name;
+		
+		if (mode === 'other') {
+			// Run additional filters on word before determining if it qualifies
+			filter(wordbank[i]);
+		}
+		
+		// filter should return boolean; true to continue
+		// if (filter(wordbank[i])) {
+		
+		// Add matches to list of suggestions
+		// Highlight the letters that match the query
+		//if (Continue) {
+			let match = option.toLowerCase().indexOf(query.toLowerCase());
+			
+			if ( option.toLowerCase().includes(query.toLowerCase()) ) {
+				suggestions.push(wordbank[i]);
+				
+				let seg1 = option.slice(0, match);
+				let seg2 = option.slice(match, match + query.length);
+				let seg3 = option.slice(match + query.length);
+				let segmented = seg1 + '<b>' + seg2 + '</b>' + seg3;
+				suggestions_b.push(segmented);
+				
+			}
+			Continue = false;
+		//}
+		
+	}
+	
+	// Display updated list
+	let dropdown = document.querySelector('#options');
+	dropdown.innerHTML = Mustache.render('<ul>{{#.}}<li>{{{.}}}</li>{{/.}}</ul>', suggestions_b);
+	
+	// Set active styles
+	if (query.length > 0 && suggestions.length > 0) {
+		dropdown.classList.add('active');
+	} else {
+		dropdown.classList.remove('active');
+	}
+	
+	// Replace input value when user clicks an autocomplete option
+	let userSelect = document.querySelectorAll('li');
+	
+	for (let i=0; i<userSelect.length; i++) {
+		userSelect[i].addEventListener('click', function() {
+			
+			// Get value of original option without <b> tags
+			// Words in suggestions[] and suggestions_b[] share same index
+			let index = suggestions_b.indexOf(userSelect[i].innerHTML);
+			if (mode === 'default') {
+				searchbox.value = suggestions[index];
+			} else {
+				searchbox.value = suggestions[index].name;
+			}
+			dropdown.classList.remove('active');
+			
+		});
+	}
+}
+
+
+function getFilters() {
+	let getNato = document.querySelectorAll('input[name=nato]');
+	for (let i=0; i<getNato.length; i++) {
+		getNato[i].addEventListener('click', function() {
+			if (getNato[i].checked) {
+				nato.push(getNato[i].value);
+			}
 		});
 	}
 	
@@ -43,122 +144,17 @@ function init() {
 			}
 		});
 	}
-	
-	
-	getDataSet();
-	autoComplete();
-	
-}
-
-
-function getDataSet() {
-	// simple mode uses string array from api
-	if (mode === 'simple') {
-		let request = new XMLHttpRequest();
-		request.open('GET', 'http://api.queencityiron.com/autocomplete');
-		
-		request.addEventListener('load', function() {
-			possible = JSON.parse(request.responseText);
-		});
-		request.send();
-		
-	} else {
-		// complex mode uses custom object array
-		possible = [
-			{	name: 'United States',
-				nato_member: true,
-				continent: 'North America'
-			},
-			{	name: 'Canada',
-				nato_member: true,
-				continent: 'North America'
-			},
-			{	name: 'Greece',
-				nato_member: true,
-				continent: 'Europe'
-			},
-			{	name: 'China',
-				nato_member: false,
-				continent: 'Asia'
-			}
-		];
-	}
-}
-
-
-function autoComplete() {
-	let filtered = [];
-	let selected = [];
-	
-	// Check possible options against search query for matches
-	for (let i=0; i<possible.length; i++) {
-		
-		// Adjust for mode
-		let p = '';
-		if (mode === 'simple') {
-			p = possible[i];
-		} else {
-			p = possible[i].name;
-			
-			// Filter list by user selected categories
-			filter(possible[i]);
-		}
-		
-		if (Continue) {
-			let match = p.toLowerCase().indexOf(query.toLowerCase());
-			
-			if ( p.toLowerCase().includes(query.toLowerCase()) ) {
-				let seg1 = p.slice(0, match);
-				let seg2 = p.slice(match, match + query.length);
-				let seg3 = p.slice(match + query.length);
-				
-				let segmented = seg1 + '<b>' + seg2 + '</b>' + seg3;
-				filtered.push(segmented);
-				selected.push(possible[i]);
-			}
-		}
-		Continue = true;
-		
-	}
-	
-	// Display updated list
-	let options = document.querySelector('#options');
-	options.innerHTML = Mustache.render('<ul>{{#.}}<li>{{{.}}}</li>{{/.}}</ul>', filtered);
-	
-	// Set active styles
-	if (query.length > 0 && filtered.length > 0) {
-		options.classList.add('active');
-	} else {
-		options.classList.remove('active');
-	}
-	
-	// Replace input value when user clicks an autocomplete option
-	let userSelect = document.querySelectorAll('li');
-	
-	for (let i=0; i<userSelect.length; i++) {
-		userSelect[i].addEventListener('click', function() {
-			
-			// Get value of original option without <b> tags
-			let index = filtered.indexOf(userSelect[i].innerHTML);
-			if (mode === 'simple') {
-				searchbox.value = selected[index];
-			} else {
-				searchbox.value = selected[index].name;
-			}
-			options.classList.remove('active');
-			
-		});
-	}
 }
 
 
 function filter(term) {
 	// If the search object (word) matches the use filter,
-	// keep it in the autocomplete options (continue)
+	// keep it in the suggestions (continue)
 	// else, reject it
 	if (continents.length > 0) {
 		if (continents.indexOf(term.continent.toLowerCase()) === -1) {
-			Continue = false;
+			//Continue = false;
+			//break;
 		}
 	}
 	
@@ -167,6 +163,8 @@ function filter(term) {
 		   Continue = false;
 		}
 	}*/
+	
+	return true; // continue
 }
 
 window.addEventListener('load', init);
